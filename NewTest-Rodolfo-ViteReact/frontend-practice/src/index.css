@@ -66,3 +66,298 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Calendar Styles */
+.calendars-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendars-wrapper {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.calendar {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    min-width: 250px;
+    flex: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.calendar-header h3 {
+    color: #646cff;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.calendar-header h4 {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.calendar-nav button {
+    background: none;
+    border: 1px solid #646cff;
+    color: #646cff;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+.calendar-nav button:hover {
+    background-color: #646cff;
+    color: white;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
+    text-align: center;
+}
+
+.calendar-weekday {
+    font-weight: 600;
+    color: #666;
+    padding: 0.25rem;
+    font-size: 0.8rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.calendar-day:hover:not(.empty):not(.disabled) {
+    border-color: #646cff;
+    background-color: rgba(100, 108, 255, 0.1);
+}
+
+.calendar-day.empty {
+    border: none;
+    cursor: default;
+}
+
+.calendar-day.selected {
+    background-color: #646cff;
+    color: white;
+    border-color: #646cff;
+}
+
+.calendar-day.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+}
+
+.selected-date-info {
+    margin-top: 0.75rem;
+    text-align: center;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.request-actions {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.request-actions p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.request-timeoff-btn {
+    margin-top: 0.75rem;
+    background-color: #646cff;
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.6em 1.2em;
+}
+
+.request-timeoff-btn:hover {
+    background-color: #535bf2;
+}
+
+/* Employee Card Styles */
+.employee-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.employee-search {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.employee-search label {
+    color: #666;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+}
+
+.employee-search input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 150px;
+    transition: all 0.2s ease;
+}
+
+.employee-search input:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.employee-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.employee-found {
+    flex-shrink: 0;
+    order: 2;
+}
+
+.employee-found img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #646cff;
+    padding: 3px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.employee-info {
+    flex-grow: 1;
+    text-align: left;
+    padding-right: 1rem;
+    order: 1;
+}
+
+.employee-info h3 {
+    color: #333;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.employee-info .position {
+    color: #646cff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0.25rem 0;
+}
+
+.employee-info .department {
+    color: #666;
+    font-size: 0.85rem;
+    margin: 0.25rem 0;
+}
+
+.employee-info .email {
+    color: #888;
+    font-size: 0.85rem;
+    margin: 0.5rem 0 0 0;
+}
+
+.no-results {
+    text-align: center;
+    padding: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Update the employee details in Home component */
+.employee-details {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.employee-details img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #646cff;
+    padding: 3px;
+    margin-bottom: 1rem;
+}
+
+.employee-details .employee-info {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.employee-details .employee-info p {
+    margin: 0.5rem 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.employee-details .employee-info p:first-child {
+    color: #646cff;
+    font-weight: 600;
+}
