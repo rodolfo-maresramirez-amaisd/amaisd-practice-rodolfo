@@ -263,6 +263,11 @@ button:focus-visible {
     box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
 }
 
+.employee-search input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
 .employee-content {
     display: flex;
     align-items: center;
@@ -360,4 +365,136 @@ button:focus-visible {
 .employee-details .employee-info p:first-child {
     color: #646cff;
     font-weight: 600;
+}
+
+/* Time Off History Styles */
+.time-off-history {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.time-off-history h3 {
+    color: #333;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.time-off-entry {
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    background-color: #f8f8f8;
+}
+
+.time-off-entry:last-child {
+    margin-bottom: 0;
+}
+
+.time-off-entry p {
+    margin: 0.25rem 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.time-off-entry small {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+/* Navbar Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.navbar-item {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-link {
+    text-decoration: none;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.navbar-link:hover {
+    color: #646cff;
+    background-color: rgba(100, 108, 255, 0.1);
+}
+
+/* Add padding to main container to account for fixed navbar */
+.main-container {
+    padding-top: 4rem; /* Adjust this value based on your navbar height */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Loading indicator styles */
+.loading-indicator {
+    margin-left: 0.5rem;
+    color: #646cff;
+    font-size: 0.85rem;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.open-timeoff {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.open-timeoff-button {
+    background-color: #646cff;
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.open-timeoff-button:hover {
+    background-color: #535bf2;
 }

@@ -1,26 +1,67 @@
-import { useState } from 'react';
-import employeeData from '../data/employees.json';
+import { useState, useEffect } from 'react';
 
 function EmployeeCard({ onEmployeeFound }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [found, setFound] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSearch = (e) => {
+  const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
     
-    // Search through employees when input changes
-    const foundEmployee = employeeData.employee.find(emp => 
-      emp.id.toString() === value
-    );
-    
-    setFound(foundEmployee);
-    onEmployeeFound(foundEmployee);
     if (value === "") {
       setFound(null);
       onEmployeeFound(null);
+      setError(null);
     }
   };
+
+  useEffect(() => {
+    const searchEmployee = async () => {
+      if (searchTerm === "") return;
+
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const numericId = parseInt(searchTerm, 10);
+        if (isNaN(numericId)) {
+          throw new Error('Please enter a valid numeric ID');
+        }
+        
+        const response = await fetch(`http://localhost:3000/employee?id=${numericId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch employee data');
+        }
+        
+        const employees = await response.json();
+        const foundEmployee = employees[0]; // Get first match since we're searching by ID
+        
+        setFound(foundEmployee || null);
+        onEmployeeFound(foundEmployee || null);
+        
+        if (!foundEmployee) {
+          setError('No employee found with that ID');
+        }
+      } catch (err) {
+        console.error('Error fetching employee:', err);
+        setError(err.message || 'Error searching for employee');
+        setFound(null);
+        onEmployeeFound(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Set up debounce timer
+    const timeoutId = setTimeout(() => {
+      searchEmployee();
+    }, 500); // Wait 500ms after last keystroke before searching
+
+    // Cleanup function to clear timeout if component updates before timeout finishes
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, onEmployeeFound]); // Only run effect when searchTerm changes
 
   return (
     <div className="employee-card">
@@ -31,8 +72,10 @@ function EmployeeCard({ onEmployeeFound }) {
               id="search"
               placeholder="Enter ID here" 
               value={searchTerm}
-              onChange={handleSearch}
+              onChange={handleInputChange}
+              disabled={isLoading}
             />
+            {isLoading && <span className="loading-indicator">Searching...</span>}
         </div>
         {found ? (
           <div className="employee-content">
@@ -49,9 +92,9 @@ function EmployeeCard({ onEmployeeFound }) {
                 />
             </div>
           </div>
-        ) : searchTerm && (
+        ) : error && searchTerm && (
           <div className="no-results">
-            <p>No employee found</p>
+            <p>{error}</p>
           </div>
         )}
     </div>

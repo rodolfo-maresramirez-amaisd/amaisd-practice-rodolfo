@@ -1,12 +1,33 @@
 import EmployeeCard from "../components/employeeCard";
 import Calendar from "../components/calendar";
 import { useState } from 'react';
+import timeOffData from '../data/emp_and_timeoff.json';
+import { getEmployees, getEmployeeTimeOff, createEmployeeTimeOff } from '../services/api';
+import { useEffect } from 'react';
 
 function Home() {
-    const [foundEmployee, setFoundEmployee] = useState(null);
     const [showCalendars, setShowCalendars] = useState(false);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+
+    const [employees, setEmployees] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadEmployees = async () => {
+            try {
+                const employees = await getEmployees();
+                setEmployees(employees);
+            } catch (error) {
+                console.log('Error loading employees:', error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadEmployees();
+    }, []);
 
     function openTimeOff() {
         setShowCalendars(!showCalendars);
@@ -17,8 +38,25 @@ function Home() {
     }
 
     function handleRequestTimeOff() {
-        if (startDate && endDate) {
-            alert(`Time off request submitted!\nStart Date: ${startDate.toLocaleDateString()}\nEnd Date: ${endDate.toLocaleDateString()}`);
+        if (startDate && endDate && employees) {
+            // Create new time off request
+            const newRequest = {
+                id: Date.now(),
+                employeeId: employees.id,
+                employeeName: `${employees.firstName} ${employees.lastName}`,
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString(),
+                requestDate: new Date().toISOString()
+            };
+
+            // Add to existing requests
+            timeOffData.requests.push(newRequest);
+
+            // Save to local storage as a backup
+            localStorage.setItem('timeOffRequests', JSON.stringify(timeOffData));
+
+            alert(`Time off request saved!\nEmployee: ${newRequest.employeeName}\nStart Date: ${startDate.toLocaleDateString()}\nEnd Date: ${endDate.toLocaleDateString()}`);
+            
             setShowCalendars(false);
             setStartDate(null);
             setEndDate(null);
@@ -27,10 +65,10 @@ function Home() {
 
     return (
         <div className="Home">
-            <div className="search-container">
-                <EmployeeCard onEmployeeFound={setFoundEmployee} />
-            </div>
-            {foundEmployee && (
+                <div className="search-container">
+                    <EmployeeCard onEmployeeFound={setEmployees} />
+                </div>
+            {employees && employees.id && (
                 <>
                     <div className="open-timeoff">
                         <button className="open-timeoff-button" onClick={openTimeOff}>
@@ -41,14 +79,14 @@ function Home() {
                         <div className="calendars-container">
                             <div className="calendars-wrapper">
                                 <Calendar 
-                                    employee={foundEmployee}
+                                    employee={employees}
                                     mode="start"
                                     selectedDate={startDate}
                                     onDateSelect={setStartDate}
                                     maxDate={endDate}
                                 />
                                 <Calendar 
-                                    employee={foundEmployee}
+                                    employee={employees}
                                     mode="end"
                                     selectedDate={endDate}
                                     onDateSelect={setEndDate}
@@ -67,6 +105,20 @@ function Home() {
                     )}
                 </>
             )}
+            <div className="time-off-history">
+                <h3>Time Off History</h3>
+                {timeOffData.timeoff.requests
+                    .filter(request => employees && request.employeeId === employees.id)
+                    .map(request => (
+                        <div key={request.id} className="time-off-entry">
+                            <p>
+                                <strong>Dates:</strong> {new Date(request.startDate).toLocaleDateString()} - {new Date(request.endDate).toLocaleDateString()}
+                            </p>
+                            <p><small>Requested on: {new Date(request.requestDate).toLocaleDateString()}</small></p>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
     );
 }
