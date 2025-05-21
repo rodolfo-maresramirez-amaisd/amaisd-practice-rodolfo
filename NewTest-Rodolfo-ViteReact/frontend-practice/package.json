@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://rodolfo-maresramirez-amaisd.github.io/amaisd-practice-rodolfo/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
