@@ -1,10 +1,10 @@
 import { Form } from "react-router";
-import type { ContactRecord } from "../data";
 import { getContact } from "../data";
 import type { Route } from "./+types/contact";
+import type { ContactRecord } from "../data";
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const contact = await getContact(params.contactId);
+export async function loader({params}: Route.LoaderArgs) {
+  const contact = await getContact(params.contactId)
   if (!contact) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -23,11 +23,6 @@ export default function Contact({
           alt={`${contact.first} ${contact.last} avatar`}
           key={contact.avatar}
           src={contact.avatar}
-          onError={(e) => {
-            console.error("Image failed to load:", contact.avatar);
-            e.currentTarget.onerror = null; // Prevent infinite loop
-            e.currentTarget.src = "https://via.placeholder.com/150"; // Fallback image
-          }}
         />
       </div>
 
