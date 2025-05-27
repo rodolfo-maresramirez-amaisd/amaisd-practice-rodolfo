@@ -1,0 +1,617 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model AcceptableUseAgreement {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  studentDate         DateTime
+  enrolledByDate      DateTime
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model AcknowledgeHandbook {
+  id                        String           @id
+  permitControlNumber       String           @unique
+  createdAt                 DateTime         @default(now())
+  updatedAt                 DateTime         @default(now())
+  accessByHomeComputer      Boolean?
+  accessBySchoolComputer    Boolean?
+  accessByHardCopyInLibrary Boolean?
+  receiveInPerson           Boolean?
+  date                      DateTime
+  importedAt                DateTime?        @default(now())
+  filed                     Boolean?
+  filedAt                   DateTime?
+  PermitToRegister          PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model ActivitiesTravelElementary {
+  id                     String           @id
+  permitControlNumber    String           @unique
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @default(now())
+  permission             String
+  accidentInsurance      String
+  date                   DateTime
+  homePhone              String
+  businessEmergencyPhone String
+  address                String
+  importedAt             DateTime?        @default(now())
+  filed                  Boolean?
+  filedAt                DateTime?
+  PermitToRegister       PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model ActivitiesTravelSecondary {
+  id                     String           @id
+  permitControlNumber    String           @unique
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @default(now())
+  permission             String
+  accidentInsurance      String
+  date                   DateTime
+  homePhone              String
+  businessEmergencyPhone String
+  address                String
+  importedAt             DateTime?        @default(now())
+  filed                  Boolean?
+  filedAt                DateTime?
+  PermitToRegister       PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model AppConfig {
+  id        String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  key       String
+  value     String
+  section   String?
+}
+
+model BYODOptIn {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  byodBoolean         Boolean
+  byod                String
+  date                DateTime
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model COPPA {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  date                DateTime
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model EarlyChildhoodSurvey {
+  permitControlNumber                String           @unique
+  id                                 String           @id
+  createdAt                          DateTime         @default(now())
+  updatedAt                          DateTime         @default(now())
+  date                               DateTime
+  parentsAsTeachers                  String
+  dollyPartonLibrary                 String
+  yearsInDollyPartonLibrary          String?
+  kinderbridgeSession                String
+  kinderbridgeSessionsPerYearBefore3 String?
+  kinderbridgeSessionsPerYearAfter3  String?
+  importedAt                         DateTime?        @default(now())
+  filed                              Boolean?
+  filedAt                            DateTime?
+  PermitToRegister                   PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model EthnicityRace {
+  permitControlNumber                  String           @unique
+  id                                   String           @id
+  createdAt                            DateTime         @default(now())
+  updatedAt                            DateTime         @default(now())
+  observerName                         String?
+  campus                               String?
+  date                                 DateTime?
+  ethnicityEn                          String?
+  ethnicitySp                          String?
+  americanIndianOrAlaskaNative         Boolean?
+  asian                                Boolean?
+  blackOrAfricanAmerican               Boolean?
+  nativeHawaiian                       Boolean?
+  white                                Boolean?
+  indioAmericano                       Boolean?
+  asiatico                             Boolean?
+  negro                                Boolean?
+  nativoDeHawai                        Boolean?
+  blanco                               Boolean?
+  observedEthnicityEn                  String?
+  observedAmericanIndianOrAlaskaNative Boolean?
+  observedAsian                        Boolean?
+  observedBlackOrAfricanAmerican       Boolean?
+  observedNativeHawaiian               Boolean?
+  observedWhite                        Boolean?
+  importedAt                           DateTime?        @default(now())
+  filed                                Boolean?
+  filedAt                              DateTime?
+  PermitToRegister                     PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model FamilySurvey {
+  id                         String           @id
+  permitControlNumber        String           @unique
+  createdAt                  DateTime         @default(now())
+  updatedAt                  DateTime         @default(now())
+  movedInLast3Years          String
+  agriOrFishingWork          String
+  enrolledInMigrantEdProgram String
+  date                       DateTime
+  importedAt                 DateTime?        @default(now())
+  filed                      Boolean?
+  filedAt                    DateTime?
+  PermitToRegister           PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model FoodAllergy {
+  id                  String            @id
+  permitControlNumber String            @unique
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @default(now())
+  parentWorkPhone     String
+  parentMobilePhone   String
+  parentHomePhone     String
+  hasFoodAllergies    Boolean
+  date                DateTime
+  importedAt          DateTime?         @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister  @relation(fields: [permitControlNumber], references: [controlNumber])
+  FoodAllergyItem     FoodAllergyItem[]
+  HealthHistory       HealthHistory?
+  HealthHistoryV2     HealthHistoryV2?
+}
+
+model FoodAllergyItem {
+  id              String      @id
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now())
+  foodAllergyId   String
+  foodName        String
+  lifeThreatening String
+  nature          String
+  importedAt      DateTime?   @default(now())
+  FoodAllergy     FoodAllergy @relation(fields: [foodAllergyId], references: [id])
+}
+
+model FosterCare {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  situation           String
+  ssnLast4            String
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model HealthHistory {
+  id                            String             @id
+  permitControlNumber           String             @unique
+  createdAt                     DateTime           @default(now())
+  updatedAt                     DateTime           @default(now())
+  foodAllergyID                 String             @unique
+  date                          DateTime
+  emergencyContactNumber        String
+  beeOrWaspAllergy              String
+  otherAllergies                String
+  otherAllergiesList            String?
+  epiPen                        String
+  anemia                        String
+  sickleCell                    String
+  arthritis                     String
+  arthritisDiagnosis            String?
+  asthma                        String
+  bladderKidney                 String
+  bladderKidneyDiagnosis        String?
+  cancer                        String
+  cancerDiagnosis               String?
+  diabetes                      String
+  heartDisease                  String
+  heartDiseaseDiagnosis         String?
+  highBP                        String
+  highBPDiagnosis               String?
+  muscularOrOrthopedic          String
+  muscularOrOrthopedicDiagnosis String?
+  neurological                  String
+  neurologicalDiagnosis         String?
+  seizures                      String
+  other                         String
+  visionImpairment              String
+  visionImpairmentComments      String?
+  hearingImpairment             String
+  hearingImpairmentComments     String?
+  scoliosisImpairment           String
+  scoliosisComments             String?
+  seriousIllnesses              String?
+  primaryCarePhys               String
+  primaryCarePhysPhone          String
+  importedAt                    DateTime?          @default(now())
+  filed                         Boolean?
+  filedAt                       DateTime?
+  FoodAllergy                   FoodAllergy        @relation(fields: [foodAllergyID], references: [id], onUpdate: NoAction)
+  PermitToRegister              PermitToRegister   @relation(fields: [permitControlNumber], references: [controlNumber])
+  PrescriptionItem              PrescriptionItem[]
+}
+
+model HealthHistoryV2 {
+  id                      String             @id
+  permitControlNumber     String             @unique
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @default(now())
+  foodAllergyID           String             @unique
+  date                    DateTime
+  parentSignature         String
+  authorize               Boolean
+  medicalAttestation      Boolean
+  emergencyContactNumber  String
+  beeswasps               Boolean
+  other                   Boolean
+  otherComments           String?
+  anemia                  Boolean
+  sickleCell              Boolean
+  arthritis               Boolean
+  anaphylaxis             Boolean
+  asthma                  Boolean
+  addOrAdhd               Boolean
+  anxiety                 Boolean
+  visionImpairment        Boolean
+  seasonalAllergies       Boolean
+  foodAllergies           Boolean
+  cancer                  Boolean
+  depression              Boolean
+  diabetes                Boolean
+  kidneyDisease           Boolean
+  headInjury              Boolean
+  hearingImpairment       Boolean
+  frequentSevereHeadaches Boolean
+  heartProblemsOrMurmur   Boolean
+  highBloodPressure       Boolean
+  nerveOrMuscleDisease    Boolean
+  seizuresOrConvulsions   Boolean
+  scoliosisImpairment     Boolean
+  gastrointestinalIssues  Boolean
+  seriousIllnesses        String?
+  importedAt              DateTime?          @default(now())
+  filed                   Boolean?
+  filedAt                 DateTime?
+  prescriptionAttestation Boolean
+  medicationAllergies     String?
+  FoodAllergy             FoodAllergy        @relation(fields: [foodAllergyID], references: [id], onUpdate: NoAction)
+  PermitToRegister        PermitToRegister   @relation(fields: [permitControlNumber], references: [controlNumber])
+  PrescriptionItem        PrescriptionItem[]
+}
+
+model HomeLanguageSurvey {
+  permitControlNumber String           @unique
+  id                  String           @id
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  childLanguage       String
+  homeLanguage        String
+  date                DateTime
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model HomeLanguageSurveyNew {
+  permitControlNumber String           @unique
+  id                  String           @id
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  q1                  String
+  q2                  String
+  q3                  String
+  correctionAgreement Boolean
+  date                DateTime
+  formCompletedBy     String
+  signature           String
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model InformationReleaseNonSchoolSponsored {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  permission          String
+  date                DateTime
+  permissionBoolean   Boolean
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model InformationReleaseSchoolSponsored {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  permission          String
+  date                DateTime
+  permissionBoolean   Boolean
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model MediaReleaseForm {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  permission          String
+  date                DateTime
+  permissionBoolean   Boolean
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model MilitaryConnected {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  militaryConnected   String
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model PermitToRegister {
+  controlNumber                        String                                @unique
+  id                                   String                                @id
+  createdAt                            DateTime                              @default(now())
+  updatedAt                            DateTime                              @default(now())
+  archived                             Boolean?
+  processed                            Boolean?
+  status                               String?
+  statusComments                       String?
+  schoolYear                           String
+  studentId                            String?
+  campusId                             String
+  firstName                            String
+  lastName                             String
+  middleName                           String
+  studentDOB                           DateTime
+  SSN                                  String
+  gender                               String
+  grade                                String
+  primaryPhone                         String
+  typeOfPhone                          String
+  bornOutsideUSA                       String
+  birthCountry                         String?                               @default("USA")
+  streetAddress1                       String
+  streetAddress2                       String
+  city                                 String
+  state                                String
+  zip                                  String
+  country                              String                                @default("United States")
+  siblings                             String?
+  parent1Relation                      String
+  parent1FullName                      String?
+  parent1DOB                           DateTime?
+  parent1Address                       String?
+  parent1PrimaryPhone                  String?
+  parent1WorkPhone                     String?
+  parent1Employer                      String?
+  parent1Email                         String?
+  parent2Relation                      String?
+  parent2FullName                      String?
+  parent2DOB                           DateTime?
+  parent2Address                       String?
+  parent2PrimaryPhone                  String?
+  parent2WorkPhone                     String?
+  parent2Employer                      String?
+  parent2Email                         String?
+  emergency1FullName                   String?
+  emergency1Relation                   String
+  emergency1PrimaryPhone               String
+  emergency1CellPhone                  String
+  emergency2Relation                   String?
+  emergency2PrimaryPhone               String?
+  emergency2CellPhone                  String?
+  emergency2FullName                   String?
+  attendedAISD                         String
+  lastSchoolName                       String?
+  expulsion                            String
+  DAEP                                 String
+  probation                            String
+  enrolledByName                       String
+  enrolledByRelation                   String
+  enrolledByAddress                    String
+  enrolledByDOB                        DateTime
+  formCompletetionStatus               String?
+  formType                             String?
+  foodAllergyHasChanged                Boolean?
+  healthHistoryHasChanged              Boolean?
+  importedAt                           DateTime?                             @default(now())
+  dollyPartonImaginationLibrary        String?
+  parentsAsTeachersProgram             String?
+  duplicate                            Boolean?
+  filed                                Boolean?
+  filedAt                              DateTime?
+  acceptedTerms                        String?
+  emergency1FirstName                  String?
+  emergency1LastName                   String?
+  emergency2FirstName                  String?
+  emergency2LastName                   String?
+  parent1FirstName                     String?
+  parent1LastName                      String?
+  parent2FirstName                     String?
+  parent2LastName                      String?
+  AcceptableUseAgreement               AcceptableUseAgreement?
+  AcknowledgeHandbook                  AcknowledgeHandbook?
+  ActivitiesTravelElementary           ActivitiesTravelElementary?
+  ActivitiesTravelSecondary            ActivitiesTravelSecondary?
+  BYODOptIn                            BYODOptIn?
+  COPPA                                COPPA?
+  EarlyChildhoodSurvey                 EarlyChildhoodSurvey?
+  EthnicityRace                        EthnicityRace?
+  FamilySurvey                         FamilySurvey?
+  FoodAllergy                          FoodAllergy?
+  FosterCare                           FosterCare?
+  HealthHistory                        HealthHistory?
+  HealthHistoryV2                      HealthHistoryV2?
+  HomeLanguageSurvey                   HomeLanguageSurvey?
+  HomeLanguageSurveyNew                HomeLanguageSurveyNew?
+  InformationReleaseNonSchoolSponsored InformationReleaseNonSchoolSponsored?
+  InformationReleaseSchoolSponsored    InformationReleaseSchoolSponsored?
+  MediaReleaseForm                     MediaReleaseForm?
+  MilitaryConnected                    MilitaryConnected?
+  PriorEducationSurvey                 PriorEducationSurvey?
+  Socioeconomic                        Socioeconomic?
+  SpecialServices                      SpecialServices?
+  StudentInfoReleaseB3                 StudentInfoReleaseB3?
+  StudentResidencyQuestionaire         StudentResidencyQuestionaire?
+}
+
+model PrescriptionItem {
+  id                String           @id
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @default(now())
+  name              String
+  reason            String
+  healthHistoryId   String?
+  importedAt        DateTime?        @default(now())
+  healthHistoryV2Id String?
+  HealthHistory     HealthHistory?   @relation(fields: [healthHistoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  HealthHistoryV2   HealthHistoryV2? @relation(fields: [healthHistoryV2Id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model PriorEducationSurvey {
+  id                                String           @id
+  permitControlNumber               String           @unique
+  createdAt                         DateTime         @default(now())
+  updatedAt                         DateTime         @default(now())
+  age                               Int
+  importedAt                        DateTime?        @default(now())
+  attendedUnitedStatesSchool        Boolean?
+  completedThreeFullSchoolYearsInUS Boolean?
+  dateFirstSchoolAttended           String?
+  filed                             Boolean?
+  filedAt                           DateTime?
+  firstSchoolCityState              String?
+  unitedStatesFirstSchool           String?
+  PermitToRegister                  PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model SiblingItem {
+  id                           String                       @id
+  createdAt                    DateTime                     @default(now())
+  updatedAt                    DateTime                     @default(now())
+  lastName                     String
+  firstName                    String
+  grade                        String?
+  schoolName                   String?
+  srqId                        String
+  importedAt                   DateTime?                    @default(now())
+  filed                        Boolean?
+  filedAt                      DateTime?
+  StudentResidencyQuestionaire StudentResidencyQuestionaire @relation(fields: [srqId], references: [id])
+}
+
+model Socioeconomic {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  snapAssistance      String?
+  tanfAssistance      String?
+  householdMembers    Int?
+  incomeRange         String?
+  certification       Boolean
+  date                DateTime
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model SpecialServices {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  previousESLServices String
+  bilingualServices   String
+  gtServices          String
+  section504Services  String
+  specialEdServices   String
+  cityAndState        String?
+  previousDistrict    String?
+  previousSchool      String?
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model StudentInfoReleaseB3 {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  militaryAuth        Boolean
+  higherEdAuth        Boolean
+  dateMilitary        DateTime
+  dateHigherEd        DateTime
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}
+
+model StudentResidencyQuestionaire {
+  id                  String           @id
+  permitControlNumber String           @unique
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @default(now())
+  presentlyResiding   String
+  date                DateTime
+  acceptedTerms       Boolean
+  importedAt          DateTime?        @default(now())
+  filed               Boolean?
+  filedAt             DateTime?
+  SiblingItem         SiblingItem[]
+  PermitToRegister    PermitToRegister @relation(fields: [permitControlNumber], references: [controlNumber])
+}

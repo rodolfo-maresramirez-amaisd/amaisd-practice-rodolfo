@@ -1,0 +1,19 @@
+{
+  "name": "prisma-practice",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tsx ./script.ts",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "astro": "^5.8.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.8.2",
+    "tsx": "^4.19.4"
+  }
+}
