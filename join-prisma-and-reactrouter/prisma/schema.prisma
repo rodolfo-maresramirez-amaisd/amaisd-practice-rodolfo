@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../prisma"
 }
 
 datasource db {
@@ -9,8 +8,8 @@ datasource db {
 }
 
 model Item {
-  itemDescription String
   itemId          Int    @id @default(autoincrement())
+  itemDescription String
   itemLocation    String
   itemPrice       Float
   itemWeight      Float

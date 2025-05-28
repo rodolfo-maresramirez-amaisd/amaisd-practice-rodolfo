@@ -1,30 +1,40 @@
 import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
 
-let prisma: PrismaClient | null = null;
+// Load environment variables
+dotenv.config();
 
-function getPrisma() {
-  if (!prisma) {
-    try {
-      prisma = new PrismaClient();
-    } catch (error) {
-      console.error('Failed to initialize Prisma client:', error);
-      throw error;
-    }
+// Initialize Prisma client with singleton pattern
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+// Initialize Prisma client
+async function initializePrisma() {
+  try {
+    await prisma.$connect();
+    return prisma;
+  } catch (error) {
+    throw new Error('Failed to initialize Prisma client');
   }
-  return prisma;
 }
 
-//get all items
+// Get all items from the database
 export async function getItems() {
   try {
-    return await getPrisma().item.findMany();
+    const prismaClient = await initializePrisma();
+    const items = await prismaClient.item.findMany();
+    return items;
   } catch (error) {
-    console.error('Error fetching items:', error);
-    return [];
+    throw new Error('Failed to fetch items');
   }
 }
 
-//create a new item
+// Create a new item
 export async function createItem(itemData: {
   itemDescription: string;
   itemLocation: string;
@@ -32,38 +42,37 @@ export async function createItem(itemData: {
   itemWeight: number;
 }) {
   try {
-    return await getPrisma().item.create({
+    const prismaClient = await initializePrisma();
+    const result = await prismaClient.item.create({
       data: itemData,
     });
+    return result;
   } catch (error) {
-    console.error('Error creating item:', error);
-    throw error;
+    throw new Error('Failed to create item');
   }
 }
 
-//get all orders
+// Get all orders
 export async function getOrders() {
   try {
-    return await getPrisma().order.findMany({
-      include: {
-        items: true,
-      },
-    });
+    const prismaClient = await initializePrisma();
+    const orders = await prismaClient.order.findMany();
+    return orders;
   } catch (error) {
-    console.error('Error fetching orders:', error);
-    return [];
+    throw new Error('Failed to fetch orders');
   }
 }
 
-//get all customers
+// Get all customers
 export async function getCustomers() {
   try {
-    return await getPrisma().customer.findMany();
+    const prismaClient = await initializePrisma();
+    const customers = await prismaClient.customer.findMany();
+    return customers;
   } catch (error) {
-    console.error('Error fetching customers:', error);
-    return [];
+    throw new Error('Failed to fetch customers');
   }
 }
 
 //export the prisma client
-export default getPrisma;
+export default prisma;
