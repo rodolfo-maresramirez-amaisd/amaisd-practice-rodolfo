@@ -1,5 +1,6 @@
-import { useLoaderData, Link } from 'react-router-dom';
-import { getItems } from '../../server/scripts';
+import { useLoaderData, Link, Form } from 'react-router-dom';
+import { getItems, deleteItem } from '../../server/scripts';
+import type { Route } from "./+types/warehouseItem";
 
 // Define the Item type based on your actual Prisma schema
 interface Item {
@@ -18,6 +19,26 @@ export async function loader() {
   } catch (error) {
     return { items: [], error: "Failed to load items" };
   }
+}
+
+// Server-side action function - handles form submissions
+export async function action({ request }: Route.ActionArgs) {
+  const formData = await request.formData();
+  const intent = formData.get("intent");
+  
+  if (intent === "delete") {
+    const itemId = formData.get("itemId");
+    if (itemId) {
+      try {
+        await deleteItem(Number(itemId));
+        return { success: true };
+      } catch (error) {
+        return { error: "Failed to delete item" };
+      }
+    }
+  }
+  
+  return { error: "Invalid request" };
 }
 
 // Client-side component - runs in the browser
@@ -70,9 +91,21 @@ export default function Warehouse() {
                     <Link to={`/warehouseItem/${item.itemId}/edit`} className="table-link">
                       Edit
                     </Link>
-                    <button className="table-button-danger">
-                      Delete
-                    </button>
+                    <Form method="post" style={{ display: 'inline' }}>
+                      <input type="hidden" name="intent" value="delete" />
+                      <input type="hidden" name="itemId" value={item.itemId} />
+                      <button 
+                        type="submit" 
+                        className="table-button-danger"
+                        onClick={(e) => {
+                          if (!confirm('Are you sure you want to delete this item?')) {
+                            e.preventDefault();
+                          }
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </Form>
                   </td>
                 </tr>
               ))

@@ -88,3 +88,5 @@ Built with ❤️ using React Router.
 # Dev Notes
 
 ## This is a joint prisma and react router app
+
+## pull the open-website.bat out and change the directory to wherever this project exists
